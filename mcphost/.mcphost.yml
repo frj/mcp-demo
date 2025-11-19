@@ -1,0 +1,2 @@
+model: ollama:llama3.2
+provider-url: http://ollama:11434

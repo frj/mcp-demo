@@ -1,0 +1,19 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./ollama/data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    entrypoint:
+      - /bin/bash
+      - -c
+      - "ollama serve & sleep 5 && ollama run llama3.2 && wait"
+
+  mcphost:
+    container_name: mcphost
+    build:
+      context: ./mcphost

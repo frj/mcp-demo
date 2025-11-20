@@ -5,4 +5,4 @@ RUN adduser mcphost
 WORKDIR /home/mcphost
 USER mcphost
 COPY .mcphost.yml /home/mcphost/
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT exec mcphost

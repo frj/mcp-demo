@@ -17,3 +17,5 @@ services:
     container_name: mcphost
     build:
       context: ./mcphost
+    profiles:
+      - manual

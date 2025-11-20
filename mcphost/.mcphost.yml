@@ -1,2 +1,7 @@
 model: ollama:llama3.2
 provider-url: http://ollama:11434
+mcpServers:
+  mcpServer:
+    type: remote
+    url: http://host.docker.internal:8080
+    transport: sse

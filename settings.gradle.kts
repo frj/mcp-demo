@@ -10,5 +10,5 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-rootProject.name = "mcp-test-app"
-include("app")
+rootProject.name = "mcp-test"
+include("mcp-server")

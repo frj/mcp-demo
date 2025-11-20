@@ -2,12 +2,19 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 
 [versions]
-guava = "33.4.6-jre"
 junit-jupiter-engine = "5.12.1"
+ktor = "3.3.2"
+logback = "1.5.21"
+mcp-kotlin-sdk = "0.7.7"
 
 [libraries]
-guava = { module = "com.google.guava:guava", version.ref = "guava" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter-engine" }
+ktor-bom = { group = "io.ktor", name = "ktor-bom", version.ref = "ktor" }
+ktor-server-cio = { group = "io.ktor", name = "ktor-server-cio" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty" }
+ktor-server-sse = { module = "io.ktor:ktor-server-sse" }
+logback = { module = "ch.qos.logback:logback-classic", version.ref="logback" }
+mcp-kotlin-server = { module = "io.modelcontextprotocol:kotlin-sdk-server", version.ref = "mcp-kotlin-sdk" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version = "2.2.0" }

@@ -3,7 +3,7 @@
 This demonstrates integrating custom behaviour into a locally deployed LLM 
 using the MCP protocol implemented by an api developed in Kotlin.
 
-The MCP api provides a service that supplies a 'Frank score' for anything
+The MCP api provides a service that supplies a notional 'Frank score' for anything
 with a name.
 
 This adds support to the LLM to answer questions such as:
@@ -31,7 +31,7 @@ docker-compose up --detach
 ```
 
 Start the mcphost console to chat with the llm. Note this will trigger the
-downloading of the LLM model files with could take some time:
+downloading of the LLM model files which could take some time:
 ```bash
 docker-compose run --rm --build mcphost
 ```
@@ -74,7 +74,7 @@ The process loosely works as follows:
   processes the prompt and returns its response.
 
 In this case the LLM Client (or MCP Host) application is [mcphost](https://github.com/mark3labs/mcphost)
-which is LLM console application written in golang that supports both MCP server
+which is a LLM console application written in golang that supports both MCP server
 integration and ollama hosted LLMs.
 
 The MCP server is implemented using the [MCP Kotlin SDK](https://github.com/modelcontextprotocol/kotlin-sdk)
@@ -82,6 +82,43 @@ which is built on the Ktor framework. The server is configured to use
 Server Side Events (SSE) as the MCP transport. 
 
 mcphost client and MCP server are run using docker compose to simplify demo setup.
+
+## Notes
+
+### Running native version of Ollama
+
+Using docker to run Ollama simplifies the Demo but is limiting in terms of optimising the
+running of the LLM for the local environment. Particularly on apple silicone for which the 
+use of the GPUs are not supported in docker at all. 
+
+Installing the native version of Ollama will improve the speed at which the LLM provides 
+its responses. 
+
+You can install the native version of Ollama as follows:
+- Ensure the dockerised version of Ollama is shutdown
+  ```bash
+  docker-compose down
+  ```
+- Download, install and run Ollama [here](https://ollama.com/download)
+- You will need to start up the MCP Server separately.
+  ```bash
+  ./gradlew mcp-server:run
+  ```
+  or
+  ```bash
+  ./gradlew mcp-server:shadowJar
+  docker-compose run --rm --service-ports mcp-server
+  ```
+### Running other LLMs
+
+You can run other LLMs with some restrictions:
+- Ollama need to support the LLM. The LLM needs to support use of 'tools'. For a list of these LLMs 
+  see [here](https://ollama.com/search?c=tools)
+- There may be other restrictions on LLMs supported by the mcphost client, for details see 
+  wha[here](https://github.com/mark3labs/mcphost?tab=readme-ov-file#available-models)
+
+You can run the demo with a different model by editing 'model' field in the mcphost config file:
+[mcphost/.mcphost.yml](mcphost/.mcphost.yml)
 
 ## Further reading
 - [Model Context Protocol](https://modelcontextprotocol.io)

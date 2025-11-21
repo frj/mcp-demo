@@ -24,8 +24,8 @@ object McpServer {
         }.start(wait = true)
     }
 
-    fun configureServer(): Server {
-        val server = Server(
+    fun configureServer(): Server =
+        Server(
             Implementation(
                 name = "Mcp server",
                 version = "0.1.0",
@@ -35,29 +35,24 @@ object McpServer {
                     tools = ServerCapabilities.Tools(listChanged = true),
                 ),
             ),
-        )
-
-        server.addTool(
-            name = "frank-score-tool",
-            description = "Provides a 'Frank Score' for anything.",
-            inputSchema = Tool.Input(
-                properties = buildJsonObject {
-                    putJsonObject("name") {
-                        put("type", JsonPrimitive("string"))
-                        put("description", JsonPrimitive("The name of the thing to score."))
-                    }
-                },
-                required = listOf("name")
-            ),
-        ) { input: CallToolRequest ->
-            val nameOfThingToScore = input.arguments["name"].toString()
-            logger.info("Executing frank score tool with argument: $nameOfThingToScore")
-            CallToolResult(
-                content = listOf(TextContent("${nameOfThingToScore.hashCode()}")),
-            )
+        ).apply {
+            addTool(
+                name = "frank-score-tool",
+                description = "Provides a 'Frank Score' for anything.",
+                inputSchema = Tool.Input(
+                    properties = buildJsonObject {
+                        putJsonObject("name") {
+                            put("type", JsonPrimitive("string"))
+                            put("description", JsonPrimitive("The name of the thing to score."))
+                        }
+                    }, required = listOf("name")
+                ),
+            ) { input: CallToolRequest ->
+                val nameOfThingToScore = input.arguments["name"].toString()
+                logger.info("Executing frank score tool with argument: $nameOfThingToScore")
+                CallToolResult(
+                    content = listOf(TextContent("${nameOfThingToScore.hashCode()}")),
+                )
+            }
         }
-
-        return server
-    }
-
 }

@@ -1,5 +1,8 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.gradleup.shadow)
     application
 }
 
@@ -26,7 +29,15 @@ java {
 }
 
 application {
-    mainClass = "org.example.AppKt"
+    mainClass = "MainKt"
+}
+
+tasks.named<ShadowJar>("shadowJar") {
+    archiveBaseName = project.name
+    archiveClassifier = ""
+    manifest {
+        attributes("Main-Class" to "MainKt")
+    }
 }
 
 tasks.named<Test>("test") {

@@ -12,6 +12,16 @@ services:
       - /bin/bash
       - -c
       - "ollama serve & sleep 5 && ollama run llama3.2 && wait"
+  mcp-server:
+    image: amazoncorretto:21-al2023-headless
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./mcp-server/build/libs/:/root/mcp-server
+    entrypoint:
+      - java
+      - -jar
+      - /root/mcp-server/mcp-server.jar
 
   mcphost:
     container_name: mcphost

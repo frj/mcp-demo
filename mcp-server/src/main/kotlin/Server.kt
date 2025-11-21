@@ -11,10 +11,13 @@ import io.modelcontextprotocol.kotlin.sdk.server.mcp
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.putJsonObject
+import org.slf4j.LoggerFactory
 
 object McpServer {
+    private val logger = LoggerFactory.getLogger(McpServer::class.java)
+
     fun start() {
-        embeddedServer(io.ktor.server.cio.CIO, host = "127.0.0.1", port = 8080) {
+        embeddedServer(io.ktor.server.cio.CIO, host = "0.0.0.0", port = 8080) {
             mcp {
                 configureServer()
             }
@@ -48,6 +51,7 @@ object McpServer {
             ),
         ) { input: CallToolRequest ->
             val nameOfThingToScore = input.arguments["name"].toString()
+            logger.info("Executing frank score tool with argument: $nameOfThingToScore")
             CallToolResult(
                 content = listOf(TextContent("${nameOfThingToScore.hashCode()}")),
             )

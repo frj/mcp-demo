@@ -19,7 +19,7 @@ The following pre-requisites are required:
 - Docker
 - Docker Compose
 
-Build the Kotlin api:
+Build the Kotlin MCP server:
 
 ```bash
 ./gradlew shadowJar
@@ -30,7 +30,7 @@ Start the LLM backend and the MCP server:
 docker-compose up --detach
 ```
 
-Start the mcphost console to chat with the llm. Note this will trigger the
+Start the **mcphost** console to chat with the llm. Note this will trigger the
 downloading of the LLM model files which could take some time:
 ```bash
 docker-compose run --rm --build mcphost
@@ -66,12 +66,11 @@ The process loosely works as follows:
   the MCP server
 - The LLM Client interrogates the MCP server which provides text descriptions of the
   endpoints it supports and the parameters they take.
-- The LLM Client initiates a session with the LLM and supplies context about the 
-  available MCP endpoints.
-- When the user enters a prompt into the LLM Client, the LLM Client and LLM negotiate
-  what MCP calls need to be made. The LLM client makes the MCP requests and supplies
-  the responses to the LLM. The responses are included in the LLMs context as it 
-  processes the prompt and returns its response.
+- The LLM Client initiates a session with the LLM and supplies context about the available MCP endpoints.
+- When the user enters a prompt into the LLM Client. 
+- The LLM Client and LLM negotiate what MCP calls need to be made. 
+- The LLM client makes the MCP requests and supplies the responses to the LLM. 
+- The responses are included in the LLMs context as it processes the prompt and returns its response.
 
 In this case the LLM Client (or MCP Host) application is [mcphost](https://github.com/mark3labs/mcphost)
 which is a LLM console application written in golang that supports both MCP server
@@ -95,12 +94,12 @@ Installing the native version of Ollama will improve the speed at which the LLM 
 its responses. 
 
 You can install the native version of Ollama as follows:
-- Ensure the dockerised version of Ollama is shutdown
+- Ensure the dockerised version of Ollama is shutdown:
   ```bash
   docker-compose down
   ```
-- Download, install and run Ollama [here](https://ollama.com/download)
-- You will need to start up the MCP Server separately.
+- Download, install and run Ollama. For details [see](https://ollama.com/download).
+- You will need to start up the MCP Server separately:
   ```bash
   ./gradlew mcp-server:run
   ```
@@ -112,12 +111,12 @@ You can install the native version of Ollama as follows:
 ### Running other LLMs
 
 You can run other LLMs with some restrictions:
-- Ollama need to support the LLM. The LLM needs to support use of 'tools'. For a list of these LLMs 
+- Ollama needs to support the LLM. The LLM needs to support use of 'tools'. For a list of these LLMs 
   see [here](https://ollama.com/search?c=tools)
-- There may be other restrictions on LLMs supported by the mcphost client, for details see 
+- There may be other restrictions on LLMs supported by the **mcphost** client, for details see 
   wha[here](https://github.com/mark3labs/mcphost?tab=readme-ov-file#available-models)
 
-You can run the demo with a different model by editing 'model' field in the mcphost config file:
+You can run the demo with a different model by editing 'model' field in the **mcphost** config file:
 [mcphost/.mcphost.yml](mcphost/.mcphost.yml)
 
 ## Further reading

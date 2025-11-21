@@ -25,12 +25,13 @@ Build the Kotlin api:
 ./gradlew shadowJar
 ```
 
-Start the LLM backend and the MCP:
+Start the LLM backend and the MCP server:
 ```bash
 docker-compose up --detach
 ```
 
-Start the mcphost console to chat with the llm:
+Start the mcphost console to chat with the llm. Note this will trigger the
+downloading of the LLM model files with could take some time:
 ```bash
 docker-compose run --rm --build mcphost
 ```
@@ -45,3 +46,45 @@ You should see the response:
 ```text
 Bobs' Frank Score is: 1037748098 
 ```
+
+## What's happening.
+
+The LLM is the llama3.2:3b model published by Meta, its being run on Ollama an 
+open source tool that allows lots of different models to be run easily.
+
+Ollama is run by spinning up the vanilla ollama docker container. 
+
+Models can be downloaded and run by making api calls to the ollama service or 
+using the cli. In this case the running of llama model is triggered by the
+'mcphost' client, see below.
+
+Model Context Protocol (MCP) is an api standard designed to make it easy to 
+integrate apis with LLMs.
+
+The process loosely works as follows:
+- A MCP enabled LLM Client (a host in MCP speak) is configured with details of 
+  the MCP server
+- The LLM Client interrogates the MCP server which provides text descriptions of the
+  endpoints it supports and the parameters they take.
+- The LLM Client initiates a session with the LLM and supplies context about the 
+  available MCP endpoints.
+- When the user enters a prompt into the LLM Client, the LLM Client and LLM negotiate
+  what MCP calls need to be made. The LLM client makes the MCP requests and supplies
+  the responses to the LLM. The responses are included in the LLMs context as it 
+  processes the prompt and returns its response.
+
+In this case the LLM Client (or MCP Host) application is [mcphost](https://github.com/mark3labs/mcphost)
+which is LLM console application written in golang that supports both MCP server
+integration and ollama hosted LLMs.
+
+The MCP server is implemented using the [MCP Kotlin SDK](https://github.com/modelcontextprotocol/kotlin-sdk)
+which is built on the Ktor framework. The server is configured to use 
+Server Side Events (SSE) as the MCP transport. 
+
+mcphost client and MCP server are run using docker compose to simplify demo setup.
+
+## Further reading
+- [Model Context Protocol](https://modelcontextprotocol.io)
+- [mcphost](https://github.com/mark3labs/mcphost)
+- [MCP Kotlin SDK](https://github.com/modelcontextprotocol/kotlin-sdk)
+- [Ollama](https://ollama.com/)

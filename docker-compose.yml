@@ -8,10 +8,6 @@ services:
       - ./ollama/data:/root/.ollama
     environment:
       - OLLAMA_HOST=0.0.0.0
-    entrypoint:
-      - /bin/bash
-      - -c
-      - "ollama serve & sleep 5 && ollama run llama3.2 && wait"
   mcp-server:
     image: amazoncorretto:21-al2023-headless
     ports:

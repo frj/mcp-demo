@@ -115,6 +115,10 @@ You can run other LLMs with some restrictions:
   see [here](https://ollama.com/search?c=tools)
 - There may be other restrictions on LLMs supported by the **mcphost** client, for details see 
   wha[here](https://github.com/mark3labs/mcphost?tab=readme-ov-file#available-models)
+- There are different variants of each version of the LLMs eg llama3.2:1b vs llama3.2:3b. The 3b
+  version has 'more parameters'. This corresponds to better results in terms of the responses the model
+  returns. This comes at the expense of the speed at which the responses are returned and the download 
+  size of the model files
 
 You can run the demo with a different model by editing 'model' field in the **mcphost** config file:
 [mcphost/.mcphost.yml](mcphost/.mcphost.yml)

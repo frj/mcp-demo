@@ -49,25 +49,27 @@ Bobs' Frank Score is: 1037748098
 
 ## What's happening.
 
-The LLM is the llama3.2:3b model published by Meta, its being run on Ollama an 
-open source tool that allows lots of different models to be run easily.
+The LLM is the qwen3:8b model published by Alibaba Cloud, this LLM was chosen
+for the demo as it is reasonably performant and it works well with MCP. The LLM 
+is being 'executed' using Ollama an open source tool that allows lots of different 
+LLMs to be run easily.
 
 Ollama is run by spinning up the vanilla ollama docker container. 
 
 Models can be downloaded and run by making api calls to the ollama service or 
-using the cli. In this case the running of llama model is triggered by the
+using the cli. In this case the running of qwen model is triggered by the
 'mcphost' client, see below.
 
 Model Context Protocol (MCP) is an api standard designed to make it easy to 
 integrate apis with LLMs.
 
 The process loosely works as follows:
-- A MCP enabled LLM Client (a host in MCP speak) is configured with details of 
-  the MCP server
+- A MCP enabled LLM Client (a host in MCP speak) is configured with the connection details of 
+  the MCP server and the LLM.
 - The LLM Client interrogates the MCP server which provides text descriptions of the
   endpoints it supports and the parameters they take.
 - The LLM Client initiates a session with the LLM and supplies context about the available MCP endpoints.
-- When the user enters a prompt into the LLM Client. 
+- The user enters a prompt into the LLM Client. 
 - The LLM Client and LLM negotiate what MCP calls need to be made. 
 - The LLM client makes the MCP requests and supplies the responses to the LLM. 
 - The responses are included in the LLMs context as it processes the prompt and returns its response.
@@ -115,12 +117,13 @@ You can run other LLMs with some restrictions:
   see [here](https://ollama.com/search?c=tools)
 - There may be other restrictions on LLMs supported by the **mcphost** client, for details see 
   wha[here](https://github.com/mark3labs/mcphost?tab=readme-ov-file#available-models)
-- There are different variants of each version of the LLMs eg llama3.2:1b vs llama3.2:3b. The 3b
+- There are different variants of each version of the LLMs eg qwen3:4b vs qwen3:8b. The 8b
   version has 'more parameters'. This corresponds to better results in terms of the responses the model
   returns. This comes at the expense of the speed at which the responses are returned and the download 
   size of the model files
 
-You can run the demo with a different model by editing 'model' field in the **mcphost** config file:
+You can run the demo with a different model by editing 'model' field in the **mcphost** config file, and 
+then restarting the mcphost console:
 [mcphost/.mcphost.yml](mcphost/.mcphost.yml)
 
 ## Further reading

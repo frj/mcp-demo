@@ -114,13 +114,13 @@ You can install the native version of Ollama as follows:
 
 You can run other LLMs with some restrictions:
 - Ollama needs to support the LLM. The LLM needs to support use of 'tools'. For a list of these LLMs 
-  see [here](https://ollama.com/search?c=tools)
+  see [here](https://ollama.com/search?c=tools).
 - There may be other restrictions on LLMs supported by the **mcphost** client, for details see 
-  wha[here](https://github.com/mark3labs/mcphost?tab=readme-ov-file#available-models)
+  [here](https://github.com/mark3labs/mcphost?tab=readme-ov-file#available-models).
 - There are different variants of each version of the LLMs eg qwen3:4b vs qwen3:8b. The 8b
   version has 'more parameters'. This corresponds to better results in terms of the responses the model
   returns. This comes at the expense of the speed at which the responses are returned and the download 
-  size of the model files
+  size of the model files.
 
 You can run the demo with a different model by editing 'model' field in the **mcphost** config file, and 
 then restarting the mcphost console:
